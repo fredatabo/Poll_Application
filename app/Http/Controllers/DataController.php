@@ -146,9 +146,25 @@ return redirect()->back()->with('success', 'result added successfully,  coontinu
 
  
   public function showLGAResultPageTotal($id) {
-      
+       
+      // get all unique polling unit id in  a local government
         $pollingUnits = DB::table('polling_unit')->where('lga_id', $id)->get(); 
+
+        /*
+        if($pollingUnits) {
+                dd("success");
+        }
+        {
+                dd("no result fot this polling unit");
+        }
+*/
+        // get name of local government for display on result page
+
+        $name = DB::table('lga')->where('lga_id', $id)->first(); 
+       
+
         //dd($pollingUnits);
+      
 
         $PDP = 0;
         $DPP = 0;
@@ -160,18 +176,20 @@ return redirect()->back()->with('success', 'result added successfully,  coontinu
   $LABOUR = 0;
   $CPP = 0;
  
- 
+  $totalResult = 0;
+ // calculate result of each part in all polling units in a local government
     foreach ($pollingUnits as $polls)
    {
-     dd($polls->uniqueid);
+   //  dd($polls->uniqueid);
         $results = DB::table('announced_pu_results')->where('polling_unit_uniqueid', $polls->uniqueid)->get(); 
         
         if($results) {
         foreach ($results as $result)
         {
-               dd($result->party_score);
+            //   dd($result->party_score);
         if($result->party_abbreviation == "PDP") {
                 $PDP = $PDP + $result->party_score;
+               
         }
 
       else  if($result->party_abbreviation == "DPP") {
@@ -211,10 +229,10 @@ return redirect()->back()->with('success', 'result added successfully,  coontinu
 
 } // for each for results ends
 
-
+$totalResult = $PDP +$DPP + $ACN + $PPA + $CDC + $JP + $ANPP + $LABOUR + $CPP;
    }
 
-   return view('ToalLgaResultPage',compact('PDP','DPP','ACN','PPA','CDC','JP','ANPP','LABOUR','CPP')); 
+   return view('ToalLgaResultPage',compact('PDP','DPP','ACN','PPA','CDC','JP','ANPP','LABOUR','CPP', 'totalResult', 'name')); 
 
    }
 

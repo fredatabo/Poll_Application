@@ -112,7 +112,7 @@ body {
 	<div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
 		<div class="navbar-nav">
         <a href="{{url('/states')}}" class="nav-item nav-link active">Get Polling Unit Result</a>
-		<!--	<a href="{{url('/lgaResults')}}" class="nav-item nav-link">LGA result</a> -->		 	
+			<a href="{{url('/lgaResults')}}" class="nav-item nav-link">LGA result</a> 	 	
 			
 			<a href="{{url('addNewResults')}}" class="nav-item nav-link ">Add Results</a>
 			
